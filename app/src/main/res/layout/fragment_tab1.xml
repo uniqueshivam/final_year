@@ -1,19 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:orientation="vertical"
     android:background="@color/background_colour"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    >
 
-
-
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/your_location"
-        android:textColor="@color/black"
-        android:textSize="20dp"/>
+        android:weightSum="10"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
 
+
+    <Spinner
+        android:layout_width="0dp"
+        android:layout_weight="5"
+        android:id="@+id/drop_down"
+        android:prompt="@string/spinner_prompt"
+        android:spinnerMode="dialog"
+        android:layout_height="wrap_content">
+
+    </Spinner>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:id="@+id/distance_input"
+            android:hint="Search by Distance"
+            android:background="@drawable/edt_text"
+            android:textSize="10dp"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:inputType="number"
+            android:textSize="8dp"
+            android:id="@+id/search_by_distance"
+            android:layout_weight="2"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/donor_recycle_view"
         android:layout_height="match_parent"

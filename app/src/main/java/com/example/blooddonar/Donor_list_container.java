@@ -46,7 +46,7 @@ public class Donor_list_container extends AppCompatActivity implements LocationL
      */
     private ViewPager mViewPager;
     private TabLayout mtabLayout;
-    TextView your_name,your_location;
+    TextView your_name,your_location,your_coordinates;
     LocationManager locationManager;
     public double current_latitude;
    public  double current_longitude;
@@ -69,6 +69,7 @@ public class Donor_list_container extends AppCompatActivity implements LocationL
         your_name =(TextView)findViewById(R.id.your_name);
         your_name.setText("Mr "+ShraredPreference_UserLogin.getInstance(this).get_user_name());
         your_location =(TextView)findViewById(R.id.your_location);
+        your_coordinates=(TextView)findViewById(R.id.your_coordinates) ;
 
 
 
@@ -144,6 +145,7 @@ public class Donor_list_container extends AppCompatActivity implements LocationL
         getLocation();
 
 
+
     }
 
 
@@ -189,6 +191,7 @@ public class Donor_list_container extends AppCompatActivity implements LocationL
 
      current_latitude = location.getLatitude();
       current_longitude = location.getLongitude();
+        your_coordinates.setText(String.valueOf(current_latitude)+" "+String.valueOf(current_longitude));
         Log.i("lat",String.valueOf(current_latitude));
         Log.i("long",String.valueOf(current_longitude));
 

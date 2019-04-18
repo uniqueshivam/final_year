@@ -2,16 +2,18 @@ package com.example.blooddonar.Model_list;
 
 public class ListItem_donor {
 
-    private String email,name,mobile,blood_group,postal_address,distance;
+    private String email,name,mobile,blood_group,postal_address,distance,latitude,longitude;
 
 
-    public ListItem_donor(String email, String name, String mobile, String blood_group, String postal_address, String distance) {
+    public ListItem_donor(String email, String name, String mobile, String blood_group, String postal_address, String distance,String latitude,String longitude) {
         this.email = email;
         this.name = name;
         this.mobile = mobile;
         this.blood_group = blood_group;
         this.postal_address = postal_address;
         this.distance = distance;
+        this.latitude=latitude;
+        this.longitude=longitude;
     }
 
 
@@ -55,8 +57,28 @@ public class ListItem_donor {
         this.postal_address = postal_address;
     }
 
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
     public String getDistance() {
-        return distance;
+
+        double d=Double.parseDouble(distance);
+        d = d *1.60934 *1.45;
+        String Km_distance = String.format("%.2f", d);
+        return Km_distance;
     }
 
     public void setDistance(String distance) {

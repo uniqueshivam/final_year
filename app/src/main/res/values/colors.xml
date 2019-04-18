@@ -11,5 +11,6 @@
     <color name="blood_red">#bb0a1e</color>
     <color name="background_colour">#ECF0F1</color>
     <color name="white">#ffffff</color>
+    <color name="blue_distance">#448AFF</color>
 
 </resources>

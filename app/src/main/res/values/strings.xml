@@ -9,4 +9,19 @@
     <string name="tab_text_3">Tab 3</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_map_route">Map</string>
+    <string name="spinner_prompt"></string>
+    <string-array name="DropDown">
+        <item>Blood Group</item>
+        <item>ALL</item>
+        <item>O+VE</item>
+       <item>O-VE</item>
+        <item>A+VE</item>
+        <item>A-VE</item>
+        <item>B+VE</item>
+        <item>B-VE</item>
+        <item>AB+VE</item>
+        <item>AB-VE</item>
+
+    </string-array>
 </resources>

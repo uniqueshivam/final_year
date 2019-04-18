@@ -4,12 +4,19 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,9 +42,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Tab1Fragment extends Fragment {
+public class Tab1Fragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     TextView your_name,your_location;
+    EditText distance_input;
+    Button search_by_distance;
+    boolean clicked=false;
+    Spinner drop_down;
+    int spinner_position;
+
+    String get_distance_by_input="";
+    String  blood_group_choosen="";
+    String temp="";
 
 
     private RecyclerView recyclerView;
@@ -50,17 +66,99 @@ public class Tab1Fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tab1,container,false);
 
 
-
-
-
+        drop_down =view.findViewById(R.id.drop_down);
         recyclerView=(RecyclerView)view.findViewById(R.id.donor_recycle_view);
         recyclerView.setHasFixedSize(true);
+        distance_input= view.findViewById(R.id.distance_input);
+        search_by_distance = view.findViewById(R.id.search_by_distance);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         listing=new ArrayList<>();
-        loadRecyclerviewData();
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),R.array.DropDown,android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        drop_down.setAdapter(adapter);
+        drop_down.setOnItemSelectedListener(this);
+
+
+        search_by_distance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                 temp = distance_input.getText().toString().trim();
+                if(distance_input.getText().toString().trim() !=null) {
+                    clicked=true;
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.detach(Tab1Fragment.this).attach(Tab1Fragment.this).commit();
+                    loadDataByInput();
+
+                }
+
+
+            }
+        });
+        if(clicked==false && spinner_position==0) {
+            loadRecyclerviewData();
+        }
+
         return view;
 
     }
+
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+             blood_group_choosen = adapterView.getItemAtPosition(i).toString();
+             spinner_position=i;
+
+            if(i>1 && TextUtils.isEmpty(temp))
+            {
+                Toast.makeText(getActivity(), blood_group_choosen, Toast.LENGTH_SHORT).show();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.detach(Tab1Fragment.this).attach(Tab1Fragment.this).commit();
+                loadDataByBloodGroup();
+                drop_down.setSelection(0);
+
+            }
+            if(i==1 &&TextUtils.isEmpty(temp))
+            {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.detach(Tab1Fragment.this).attach(Tab1Fragment.this).commit();
+                loadRecyclerviewData();
+                drop_down.setSelection(0);
+            }
+             if(i==1 && !TextUtils.isEmpty(temp))
+            {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.detach(Tab1Fragment.this).attach(Tab1Fragment.this).commit();
+                loadDataByInput();
+                drop_down.setSelection(0);
+                distance_input.setText("");
+
+            }
+
+            if(i >1 && !TextUtils.isEmpty(temp))
+            {
+                Toast.makeText(getActivity(), "see", Toast.LENGTH_SHORT).show();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.detach(Tab1Fragment.this).attach(Tab1Fragment.this).commit();
+                loadDataByBloodGroup_distance();
+                drop_down.setSelection(0);
+                distance_input.setText("");
+
+            }
+
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+
+
+
 
 
     private void loadRecyclerviewData() {
@@ -76,7 +174,7 @@ public class Tab1Fragment extends Fragment {
                     {
                         JSONObject o = jsonArray.getJSONObject(i);
                         ListItem_donor obj = new ListItem_donor(o.getString("email"),o.getString("name"),o.getString("mobile"),o.getString("blood_group"),o.getString("postal_address"),
-                                o.getString("distance"));
+                                o.getString("distance"),o.getString("latitude"),o.getString("longitude"));
                         listing.add(obj);
 
                     }adapter= new Myadapter(listing,getActivity().getApplicationContext());
@@ -105,5 +203,153 @@ public class Tab1Fragment extends Fragment {
 
 
     }
+
+
+    public void loadDataByInput()
+    {
+
+         final Double result_input = (Double.parseDouble(temp))*0.621371;
+
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, constants.DONOR_LISTING_BY_INPUT, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("in response","hii");
+                try {
+
+                    JSONArray jsonArray = new JSONArray(response);
+                    for(int i=0;i<jsonArray.length();i++)
+                    {
+                        JSONObject o = jsonArray.getJSONObject(i);
+                        ListItem_donor obj = new ListItem_donor(o.getString("email"),o.getString("name"),o.getString("mobile"),o.getString("blood_group"),o.getString("postal_address"),
+                                o.getString("distance"),o.getString("latitude"),o.getString("longitude"));
+                        listing.add(obj);
+
+                    }adapter= new Myadapter(listing,getActivity().getApplicationContext());
+                    recyclerView.setAdapter(adapter);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), "No donors found nearby", Toast.LENGTH_SHORT).show();
+
+            }
+
+        }){
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("latitude", SharedPreference_for_currentLocation.getInstance(getActivity()).get_user_latitude());
+                params.put("longitude",SharedPreference_for_currentLocation.getInstance(getActivity()).get_user_longitude());
+                params.put("distance",result_input.toString());
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(stringRequest);
+
+    }
+
+
+
+    public void loadDataByBloodGroup()
+    {
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, constants.DONOR_LISTING_BY_BLOOD_GROUP, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("in response","hii");
+                try {
+
+                    JSONArray jsonArray = new JSONArray(response);
+                    for(int i=0;i<jsonArray.length();i++)
+                    {
+                        JSONObject o = jsonArray.getJSONObject(i);
+                        ListItem_donor obj = new ListItem_donor(o.getString("email"),o.getString("name"),o.getString("mobile"),o.getString("blood_group"),o.getString("postal_address"),
+                                o.getString("distance"),o.getString("latitude"),o.getString("longitude"));
+                        listing.add(obj);
+
+                    }adapter= new Myadapter(listing,getActivity().getApplicationContext());
+                    recyclerView.setAdapter(adapter);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), "No donors found nearby", Toast.LENGTH_SHORT).show();
+
+            }
+
+        }){
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("latitude", SharedPreference_for_currentLocation.getInstance(getActivity()).get_user_latitude());
+                params.put("longitude",SharedPreference_for_currentLocation.getInstance(getActivity()).get_user_longitude());
+                params.put("blood_group",blood_group_choosen);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(stringRequest);
+
+    }
+
+    public void loadDataByBloodGroup_distance()
+    {
+        final Double result_input = (Double.parseDouble(temp))*0.621371;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, constants.DONOR_LISTING_BY_BLOOD_AND_DISTANCE, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("in response","hii");
+                try {
+
+                    JSONArray jsonArray = new JSONArray(response);
+                    for(int i=0;i<jsonArray.length();i++)
+                    {
+                        JSONObject o = jsonArray.getJSONObject(i);
+                        ListItem_donor obj = new ListItem_donor(o.getString("email"),o.getString("name"),o.getString("mobile"),o.getString("blood_group"),o.getString("postal_address"),
+                                o.getString("distance"),o.getString("latitude"),o.getString("longitude"));
+                        listing.add(obj);
+
+                    }adapter= new Myadapter(listing,getActivity().getApplicationContext());
+                    recyclerView.setAdapter(adapter);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), "No donors found nearby", Toast.LENGTH_SHORT).show();
+
+            }
+
+        }){
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("latitude", SharedPreference_for_currentLocation.getInstance(getActivity()).get_user_latitude());
+                params.put("longitude",SharedPreference_for_currentLocation.getInstance(getActivity()).get_user_longitude());
+                params.put("blood_group",blood_group_choosen);
+                params.put("distance",result_input.toString());
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(stringRequest);
+
+
+    }
+
+
 
 }

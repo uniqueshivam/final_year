@@ -44,7 +44,7 @@ public class Myadapter extends RecyclerView.Adapter<Myadapter.ViewHolder>  {
         ListItem_donor listItem_donor = listDonors.get(position);
         holder.textView_donor_name.setText(listItem_donor.getName());
         holder.textView_donor_blood_group.setText(listItem_donor.getBlood_group());
-        holder.textView_donor_postal_address.setText(listItem_donor.getPostal_address());
+       // holder.textView_donor_postal_address.setText(listItem_donor.getPostal_address());
         holder.textView_distance.setText(listItem_donor.getDistance()+" KM");
 
     }
@@ -59,6 +59,7 @@ public class Myadapter extends RecyclerView.Adapter<Myadapter.ViewHolder>  {
     public static class ViewHolder extends  RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView textView_donor_name,textView_donor_blood_group,textView_donor_postal_address,textView_distance;
 
+
         List<ListItem_donor> listDonors = new ArrayList<ListItem_donor>();
         Context ctx;
 
@@ -72,7 +73,7 @@ public class Myadapter extends RecyclerView.Adapter<Myadapter.ViewHolder>  {
 
             textView_donor_name=(TextView)itemView.findViewById(R.id.donor_name);
             textView_donor_blood_group =(TextView)itemView.findViewById(R.id.donor_blood_group);
-            textView_donor_postal_address =(TextView)itemView.findViewById(R.id.donor_address);
+           // textView_donor_postal_address =(TextView)itemView.findViewById(R.id.donor_address);
             textView_distance =(TextView)itemView.findViewById(R.id.donor_distance);
 
         }
@@ -90,6 +91,8 @@ public class Myadapter extends RecyclerView.Adapter<Myadapter.ViewHolder>  {
             i.putExtra("address",listItem.getPostal_address());
             i.putExtra("blood_group",listItem.getBlood_group());
             i.putExtra("distance",listItem.getDistance());
+            i.putExtra("latitude",listItem.getLatitude());
+            i.putExtra("longitude",listItem.getLongitude());
 //            i.putExtra("agency service area",listItem.getAgency_service_area());
 //            i.putExtra("agency id",listItem.getAgency_id());
             this.ctx.startActivity(i);
