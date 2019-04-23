@@ -242,7 +242,7 @@ public class Tab1Fragment extends Fragment implements AdapterView.OnItemSelected
                     {
                         JSONObject o = jsonArray.getJSONObject(i);
                         ListItem_donor obj = new ListItem_donor(o.getString("email"),o.getString("name"),o.getString("mobile"),o.getString("blood_group"),o.getString("postal_address"),
-                                o.getString("distance"),o.getString("latitude"),o.getString("longitude"));
+                                o.getString("distance"),o.getString("latitude"),o.getString("longitude"),o.getString("gender"),o.getString("age"));
                         listing.add(obj);
 
                     }adapter= new Myadapter(listing,getActivity().getApplicationContext());
@@ -291,7 +291,7 @@ public class Tab1Fragment extends Fragment implements AdapterView.OnItemSelected
                     {
                         JSONObject o = jsonArray.getJSONObject(i);
                         ListItem_donor obj = new ListItem_donor(o.getString("email"),o.getString("name"),o.getString("mobile"),o.getString("blood_group"),o.getString("postal_address"),
-                                o.getString("distance"),o.getString("latitude"),o.getString("longitude"));
+                                o.getString("distance"),o.getString("latitude"),o.getString("longitude"),o.getString("gender"),o.getString("age"));
                         listing.add(obj);
 
                     }adapter= new Myadapter(listing,getActivity().getApplicationContext());
@@ -339,7 +339,7 @@ public class Tab1Fragment extends Fragment implements AdapterView.OnItemSelected
                     {
                         JSONObject o = jsonArray.getJSONObject(i);
                         ListItem_donor obj = new ListItem_donor(o.getString("email"),o.getString("name"),o.getString("mobile"),o.getString("blood_group"),o.getString("postal_address"),
-                                o.getString("distance"),o.getString("latitude"),o.getString("longitude"));
+                                o.getString("distance"),o.getString("latitude"),o.getString("longitude"),o.getString("gender"),o.getString("age"));
                         listing.add(obj);
 
                     }adapter= new Myadapter(listing,getActivity().getApplicationContext());
@@ -385,7 +385,7 @@ public class Tab1Fragment extends Fragment implements AdapterView.OnItemSelected
                     {
                         JSONObject o = jsonArray.getJSONObject(i);
                         ListItem_donor obj = new ListItem_donor(o.getString("email"),o.getString("name"),o.getString("mobile"),o.getString("blood_group"),o.getString("postal_address"),
-                                o.getString("distance"),o.getString("latitude"),o.getString("longitude"));
+                                o.getString("distance"),o.getString("latitude"),o.getString("longitude"),o.getString("gender"),o.getString("age"));
                         listing.add(obj);
 
                     }adapter= new Myadapter(listing,getActivity().getApplicationContext());

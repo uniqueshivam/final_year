@@ -54,6 +54,11 @@ public class Myadapter extends RecyclerView.Adapter<Myadapter.ViewHolder>  {
        // holder.textView_donor_postal_address.setText(listItem_donor.getPostal_address());
         holder.textView_distance.setText(listItem_donor.getDistance()+" KM");
 
+
+
+
+
+
         ImageRequest imageRequest = new ImageRequest( ROOT_URL_image+ listItem_donor.getEmail()+".jpg", new Response.Listener<Bitmap>() {
             @Override
             public void onResponse(Bitmap response) {
@@ -70,6 +75,9 @@ public class Myadapter extends RecyclerView.Adapter<Myadapter.ViewHolder>  {
         Mysingleton.getInstance(context).addToRequestQueue(imageRequest);
 
 
+
+
+
     }
 
     @Override
@@ -82,6 +90,7 @@ public class Myadapter extends RecyclerView.Adapter<Myadapter.ViewHolder>  {
     public static class ViewHolder extends  RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView textView_donor_name,textView_donor_blood_group,textView_donor_postal_address,textView_distance;
         private CircleImageView donor_dp;
+
 
         List<ListItem_donor> listDonors = new ArrayList<ListItem_donor>();
         Context ctx;
@@ -116,6 +125,8 @@ public class Myadapter extends RecyclerView.Adapter<Myadapter.ViewHolder>  {
             i.putExtra("distance",listItem.getDistance());
             i.putExtra("latitude",listItem.getLatitude());
             i.putExtra("longitude",listItem.getLongitude());
+            i.putExtra("gender",listItem.getSex());
+            i.putExtra("age",listItem.getAge());
 //            i.putExtra("agency service area",listItem.getAgency_service_area());
 //            i.putExtra("agency id",listItem.getAgency_id());
             this.ctx.startActivity(i);
