@@ -3,6 +3,7 @@ package com.example.blooddonar.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -49,15 +50,17 @@ public class Myadapter extends RecyclerView.Adapter<Myadapter.ViewHolder>  {
     @Override
     public void onBindViewHolder(@NonNull final Myadapter.ViewHolder holder, int position) {
         ListItem_donor listItem_donor = listDonors.get(position);
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/CONSOLAB.TTF");
+        Typeface typeface_gothic = Typeface.createFromAsset(context.getAssets(), "fonts/Century Gothic.ttf");
+        holder.textView_donor_name.setTypeface(typeface);
+        holder.textView_donor_blood_group.setTypeface(typeface_gothic);
+        holder.textView_distance.setTypeface(typeface_gothic);
+
+
         holder.textView_donor_name.setText(listItem_donor.getName());
         holder.textView_donor_blood_group.setText(listItem_donor.getBlood_group());
        // holder.textView_donor_postal_address.setText(listItem_donor.getPostal_address());
         holder.textView_distance.setText(listItem_donor.getDistance()+" KM");
-
-
-
-
-
 
         ImageRequest imageRequest = new ImageRequest( ROOT_URL_image+ listItem_donor.getEmail()+".jpg", new Response.Listener<Bitmap>() {
             @Override
