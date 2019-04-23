@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Blood Donar</string>
+    <string name="app_name">Blood Donor</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -23,5 +23,25 @@
         <item>AB+VE</item>
         <item>AB-VE</item>
 
+    </string-array>
+
+    <string-array name="DropDown_blood_group">
+        <item>Blood Group</item>
+        <item>O+VE</item>
+        <item>O-VE</item>
+        <item>A+VE</item>
+        <item>A-VE</item>
+        <item>B+VE</item>
+        <item>B-VE</item>
+        <item>AB+VE</item>
+        <item>AB-VE</item>
+
+    </string-array>
+
+    <string-array name="DropDown_gender">
+        <item>Gender</item>
+        <item>MALE</item>
+        <item>FEMALE</item>
+        <item>OTHERS</item>
     </string-array>
 </resources>

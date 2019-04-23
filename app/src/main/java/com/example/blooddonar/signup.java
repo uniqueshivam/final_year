@@ -5,18 +5,25 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -30,26 +37,38 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class signup extends AppCompatActivity {
-    ImageView imageView;
-    EditText email, password, name, mobile, blood_group;
+    ImageView imageView,choose;
+    EditText email, password, name, mobile, age;
     Button submit;
     ProgressDialog sign_up;
+    Spinner drop_down_blood_group;
+    Spinner drop_down_gender;
+
+    CircleImageView acc_dp;
 
     static final int REQUEST_LOCATION = 1;
     double lattitude;
     double longitude;
+    String blood_group_choosen;
+    String gender_choosen;
 
     private LocationManager locationManager;
     private LocationListener locationListener;
     EditText postal_address;
+
+    private final int IMG_REQUEST =1;
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,15 +79,53 @@ public class signup extends AppCompatActivity {
         }
         setContentView(R.layout.activity_signup);
         imageView = (ImageView) findViewById(R.id.imageView4_back);
+        choose = findViewById(R.id.choose);
+        acc_dp = findViewById(R.id.acc_dp);
         postal_address = (EditText) findViewById(R.id.editText9_postal_address);
         email = (EditText) findViewById(R.id.editText3_email);
         password = (EditText) findViewById(R.id.editText4_paswrd);
         name = (EditText) findViewById(R.id.editText5_name);
         mobile = (EditText) findViewById(R.id.editText7_mobile);
-        blood_group = (EditText) findViewById(R.id.editText8_blood_group);
+        age = (EditText) findViewById(R.id.editText8_age);
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         submit =(Button) findViewById(R.id.button_submit);
         sign_up=new ProgressDialog(this);
+        drop_down_blood_group=findViewById(R.id.drop_down_blood_group);
+        drop_down_gender =findViewById(R.id.drop_down_gender);
+
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.DropDown_blood_group,android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        drop_down_blood_group.setAdapter(adapter);
+        drop_down_blood_group.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                blood_group_choosen = adapterView.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        ArrayAdapter<CharSequence> adapter_gender = ArrayAdapter.createFromResource(this,R.array.DropDown_gender,android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        drop_down_gender.setAdapter(adapter_gender);
+
+        drop_down_gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                gender_choosen = adapterView.getItemAtPosition(i).toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,8 +142,42 @@ public class signup extends AppCompatActivity {
             }
         });
 
+        choose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent,IMG_REQUEST);
+            }
+        });
+
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == IMG_REQUEST && resultCode==RESULT_OK && data!=null){
+            Uri path = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),path);
+                acc_dp.setImageBitmap(bitmap);
+                acc_dp.setVisibility(View.VISIBLE);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+
+    private String imageToString(Bitmap bitmap)
+    {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+        byte[] byteImg = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(byteImg,Base64.DEFAULT);
+    }
 
     void getlocation() {
 
@@ -150,7 +241,7 @@ public class signup extends AppCompatActivity {
         final String get_password = password.getText().toString().trim();
         final String get_name = name.getText().toString().trim();
         final String get_mobile = mobile.getText().toString().trim();
-        final String get_blood_group = blood_group.getText().toString().trim();
+        final String get_age = age.getText().toString().trim();
         final String get_postal_address = postal_address.getText().toString().trim();
 
          sign_up.setMessage("Hold On ..");
@@ -189,10 +280,13 @@ public class signup extends AppCompatActivity {
                 params.put("password", get_password);
                 params.put("name", get_name);
                 params.put("mobile", get_mobile);
-                params.put("blood_group", get_blood_group);
+                params.put("age", get_age);
                 params.put("latitude", String.valueOf(lattitude));
                 params.put("longitude", String.valueOf(longitude));
                 params.put("postal_address", get_postal_address);
+                params.put("blood_group",blood_group_choosen);
+                params.put("gender",gender_choosen);
+                params.put("image",imageToString(bitmap));
 //                params.put("photo_id",getagency_id);
 //                params.put("latitude",);
 //
@@ -206,4 +300,6 @@ public class signup extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
+
+
 }

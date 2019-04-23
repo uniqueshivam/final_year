@@ -5,87 +5,88 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
+    android:weightSum="1"
     tools:context=".Donor_profile_clicked">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="0.4"
+        android:orientation="vertical"
+        android:background="#FFFAFA"
+        android:layout_height="0dp">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="210dp"
+        android:layout_height="210dp"
+        android:elevation="100dp"
+        android:layout_centerHorizontal="true"
+        android:shape="rectangle"
+        android:layout_gravity="center"
+        app:cardCornerRadius="105dp"
+        android:thicknessRatio="1.9"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp">
+    
+    <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:adjustViewBounds="true"-->
+        <!--android:scaleType="fitCenter"-->
+        <!--android:background="@drawable/img"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_weight="0.4"-->
+        <!--android:layout_marginTop="15dp"-->
+        <!--android:layout_marginBottom="5dp"-->
+        <!--android:src="@drawable/shivam"/>-->
+
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="210dp"
+            android:layout_height="210dp"
+            android:src="@drawable/man"
+            android:layout_gravity="center"
+            app:civ_border_color="@color/white"/>
+
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="0.6">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:orientation="horizontal">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Donor Name :"
-        android:textColor="@color/black"
-        android:textSize="20dp"
+        android:layout_marginTop="15dp"
         android:layout_marginLeft="20dp"
-        android:fontFamily="sans-serif"/>
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/profile_donor_name"
-            android:textColor="@color/blood_red"
-            android:textSize="15dp"
-            android:layout_marginLeft="20dp"
-            android:fontFamily="monospace"/>
-
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Donor Mail :"
             android:textColor="@color/black"
-            android:textSize="20dp"
-            android:layout_marginLeft="20dp"
-            android:fontFamily="sans-serif"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/profile_donor_email"
-            android:textColor="@color/blood_red"
-            android:textSize="15dp"
-            android:layout_marginLeft="20dp"
-            android:fontFamily="monospace"/>
-
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Donor Blood Group :"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:layout_marginLeft="20dp"
-            android:fontFamily="sans-serif"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/profile_donor_bloodGroup"
-            android:textColor="@color/blood_red"
+            android:textStyle="bold"
             android:textSize="25dp"
-            android:layout_marginLeft="20dp"
+            android:text="Shivam,"
+
             android:fontFamily="monospace"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/age"
+            android:text="22"
+            android:textColor="@color/black"
+            android:textStyle="normal"
+            android:textSize="25dp"/>
 
 
     </LinearLayout>
@@ -94,83 +95,196 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Donor Address :"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:layout_marginLeft="20dp"
-            android:fontFamily="sans-serif"/>
+      <ImageView
+          android:layout_width="25dp"
+          android:layout_height="25dp"
+          android:src="@drawable/placeholder"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/profile_donor_address"
-            android:textColor="@color/blood_red"
-            android:textSize="15dp"
-            android:layout_marginLeft="20dp"
-            android:fontFamily="monospace"/>
-
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Donor Distance :"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:layout_marginLeft="20dp"
-            android:fontFamily="sans-serif"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/profile_donor_distance"
-            android:textColor="@color/blood_red"
-            android:textSize="15dp"
-            android:layout_marginLeft="20dp"
+            android:textColor="@color/black"
+            android:textSize="13dp"
+            android:layout_gravity="center"
+            android:text="4 miles away"
+            android:layout_marginLeft="15dp"
             android:fontFamily="monospace"/>
 
 
     </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:orientation="horizontal">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Get Route"
-        android:textSize="20dp"
-        android:id="@+id/get_route"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:layout_gravity="center"/>
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@drawable/envelope"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Chat with donor"
-        android:textSize="20dp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/blood_red"
-        android:textStyle="bold"
-        android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/profile_donor_email"
+                android:textColor="@color/black"
+                android:textSize="13dp"
+                android:layout_gravity="center"
+                android:text="uniqueshivam@gmail.com"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="monospace"/>
+
+        </LinearLayout>
 
 
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:orientation="horizontal">
 
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@drawable/blood"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/profile_donor_bloodGroup"
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:layout_gravity="center"
+                android:text="O+VE"
+                android:layout_marginLeft="5dp"
+                android:fontFamily="monospace"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:background="@color/background_colour"/>
+
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/profile_donor_address"
+            android:textColor="@color/blue_distance"
+            android:layout_gravity="center"
+            android:textSize="14dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:text="Badi patan devi, Gulzarbagh"
+            android:fontFamily="monospace"/>
+
+
+    </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:background="@color/background_colour"/>
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:elevation="20dp"
+            android:layout_centerHorizontal="true"
+            android:shape="ring"
+            app:cardCornerRadius="35dp"
+            android:layout_margin="20dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:id="@+id/get_route"
+                android:src="@drawable/navigation"/>
+        </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:elevation="20dp"
+                android:layout_centerHorizontal="true"
+                android:shape="ring"
+                app:cardCornerRadius="35dp"
+
+                android:layout_margin="20dp">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/conversation"/>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Get Route"-->
+        <!--android:textSize="20dp"-->
+        <!--android:id="@+id/get_route"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:textColor="@color/black"-->
+        <!--android:textStyle="bold"-->
+        <!--android:layout_gravity="center"/>-->
+
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Chat with donor"-->
+        <!--android:textSize="20dp"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:textColor="@color/blood_red"-->
+        <!--android:textStyle="bold"-->
+        <!--android:layout_gravity="center"/>-->
+
+    </LinearLayout>
 
 
 

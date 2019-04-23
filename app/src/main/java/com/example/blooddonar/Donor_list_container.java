@@ -3,6 +3,7 @@ package com.example.blooddonar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -25,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.Locale;
@@ -64,12 +66,18 @@ public class Donor_list_container extends AppCompatActivity implements LocationL
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
 
+
         mtabLayout = (TabLayout)findViewById(R.id.tabs) ;
         mtabLayout.setupWithViewPager(mViewPager);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/CONSOLAB.TTF");
+        Typeface typeface_gothic = Typeface.createFromAsset(getAssets(), "fonts/Century Gothic.ttf");
+
         your_name =(TextView)findViewById(R.id.your_name);
         your_name.setText("Mr "+ShraredPreference_UserLogin.getInstance(this).get_user_name());
+        your_name.setTypeface(typeface_gothic);
         your_location =(TextView)findViewById(R.id.your_location);
-        your_coordinates=(TextView)findViewById(R.id.your_coordinates) ;
+        your_location.setTypeface(typeface_gothic);
+       // your_coordinates=(TextView)findViewById(R.id.your_coordinates) ;
 
 
 
@@ -148,6 +156,15 @@ public class Donor_list_container extends AppCompatActivity implements LocationL
 
     }
 
+    public void onBackPressed() {
+        // super.onBackPressed(); commented this line in order to disable back press
+        //Write your code here
+
+        Toast.makeText(getApplicationContext(), "First Logout Yourself", Toast.LENGTH_SHORT).show();
+    }
+
+
+
 
 
 
@@ -191,7 +208,7 @@ public class Donor_list_container extends AppCompatActivity implements LocationL
 
      current_latitude = location.getLatitude();
       current_longitude = location.getLongitude();
-        your_coordinates.setText(String.valueOf(current_latitude)+" "+String.valueOf(current_longitude));
+      //  your_coordinates.setText(String.valueOf(current_latitude)+" "+String.valueOf(current_longitude));
         Log.i("lat",String.valueOf(current_latitude));
         Log.i("long",String.valueOf(current_longitude));
 

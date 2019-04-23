@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/appbar_padding_top"
-        android:background="@color/blood_red"
+        android:background="@color/white"
         android:theme="@style/AppTheme.AppBarOverlay">
         <!--<LinearLayout-->
             <!--android:layout_width="wrap_content"-->
@@ -26,36 +26,49 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_weight="1"
-            android:background="@color/blood_red"
+            android:layout_gravity="center"
+            android:paddingLeft="10dp"
+            android:background="@color/white"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:titleTextColor="@color/black"
             app:title="@string/app_name">
 
         </android.support.v7.widget.Toolbar>
 
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:paddingLeft="10dp"
-                android:src="@drawable/man"/>
+                android:src="@drawable/user"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/your_name"
                 android:textSize="20dp"
+                android:textStyle="bold"
                 android:paddingLeft="12dp"
                 android:layout_gravity="center"
-                android:textColor="@color/white"/>
+                android:textColor="@color/green"/>
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:orientation="horizontal">
 
 
@@ -63,7 +76,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:paddingLeft="10dp"
-            android:src="@drawable/location"
+            android:src="@drawable/placeholder"
             />
             <TextView
                 android:layout_width="wrap_content"
@@ -72,23 +85,25 @@
                 android:textSize="12dp"
                 android:paddingLeft="12dp"
                 android:layout_gravity="center"
-                android:textColor="@color/white"
+                android:textColor="@color/blue_distance"
                 />
 
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/your_coordinates"
-            android:textSize="12dp"
-            android:paddingLeft="12dp"
-            android:layout_gravity="center"
-            android:textColor="@color/white"
-            />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/your_coordinates"-->
+            <!--android:textSize="12dp"-->
+            <!--android:paddingLeft="12dp"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:textColor="@color/white"-->
+            <!--/>-->
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
+            app:tabTextColor="@color/black"
+            app:tabSelectedTextColor="@color/green"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

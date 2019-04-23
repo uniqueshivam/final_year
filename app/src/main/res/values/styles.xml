@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorSecondary">@color/black </item>
     </style>
 
     <style name="myEditText" parent="Theme.AppCompat.Light">
@@ -27,5 +28,13 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+
+    <!--<style name="mySpinnerItemStyle" parent="@android:style/Widget.simple_spinner_dropdown_item">-->
+        <!--<item name="android:textColor">@color/blood_red</item>-->
+        <!--<item name="android:textSize">12dp</item>-->
+    <!--</style>-->
+
 
 </resources>

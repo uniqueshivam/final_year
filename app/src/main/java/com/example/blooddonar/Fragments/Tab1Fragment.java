@@ -1,10 +1,14 @@
 package com.example.blooddonar.Fragments;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -14,8 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,31 +50,39 @@ public class Tab1Fragment extends Fragment implements AdapterView.OnItemSelected
 
     TextView your_name,your_location;
     EditText distance_input;
-    Button search_by_distance;
+    ImageView search_by_distance;
     boolean clicked=false;
     Spinner drop_down;
     int spinner_position;
+    SwipeRefreshLayout mswipeRefreshLayout;
 
     String get_distance_by_input="";
     String  blood_group_choosen="";
     String temp="";
+    android.support.v7.widget.Toolbar spinner_search_layout;
+
+
 
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private List<ListItem_donor> listing;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tab1,container,false);
 
-
+//        spinner_search_layout = view.findViewById(R.id.spinner_search_layout);
         drop_down =view.findViewById(R.id.drop_down);
         recyclerView=(RecyclerView)view.findViewById(R.id.donor_recycle_view);
         recyclerView.setHasFixedSize(true);
+
+
         distance_input= view.findViewById(R.id.distance_input);
         search_by_distance = view.findViewById(R.id.search_by_distance);
+        mswipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         listing=new ArrayList<>();
 
@@ -78,6 +90,7 @@ public class Tab1Fragment extends Fragment implements AdapterView.OnItemSelected
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         drop_down.setAdapter(adapter);
         drop_down.setOnItemSelectedListener(this);
+
 
 
         search_by_distance.setOnClickListener(new View.OnClickListener() {
@@ -99,11 +112,71 @@ public class Tab1Fragment extends Fragment implements AdapterView.OnItemSelected
             loadRecyclerviewData();
         }
 
+
+
+
+        mswipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if(!TextUtils.isEmpty(temp) && spinner_position>0) {
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.detach(Tab1Fragment.this).attach(Tab1Fragment.this).commit();
+                   loadDataByBloodGroup_distance();
+                }
+                if(!TextUtils.isEmpty(temp))
+                {
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.detach(Tab1Fragment.this).attach(Tab1Fragment.this).commit();
+                    loadDataByInput();
+                }
+
+                if(spinner_position ==0)
+                {
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.detach(Tab1Fragment.this).attach(Tab1Fragment.this).commit();
+                   // loadRecyclerviewData();
+                }
+               // loadRecyclerviewData();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mswipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 3000);
+            }
+        });
+
+
+
+//        recyclerView.setOnScrollListener(new HidingScrollListner() {
+//            @Override
+//            public void onHide() {
+//                hideViews();
+//            }
+//
+//            @Override
+//            public void onShow() {
+//
+//                showViews();
+//            }
+//        });
+
         return view;
 
     }
-
-
+//
+////    private void hideViews() {
+////
+////        spinner_search_layout.animate().translationY(-spinner_search_layout.getHeight()).setInterpolator(new AccelerateInterpolator(2));
+////
+////
+////
+////    }
+////    private void showViews(){
+////
+////        spinner_search_layout.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
+//
+//    }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -155,11 +228,6 @@ public class Tab1Fragment extends Fragment implements AdapterView.OnItemSelected
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
-
-
-
-
-
 
     private void loadRecyclerviewData() {
 

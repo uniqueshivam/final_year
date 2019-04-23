@@ -1,53 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFAFA"
     android:orientation="vertical"
-    android:background="@color/background_colour"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="match_parent">
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical"-->
+        <!--android:id="@+id/spinner_search_layout"-->
+        <!--android:background="@color/background_colour">-->
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:elevation="15dp"
+        app:cardCornerRadius="5dp"
+        android:background="#FFFAFA"
+        android:layout_centerHorizontal="true"
+        android:shape="ring"
+        android:thicknessRatio="1.9"
+
+        >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="10"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
         android:orientation="horizontal">
 
 
     <Spinner
         android:layout_width="0dp"
-        android:layout_weight="5"
+        android:layout_weight="4.5"
         android:id="@+id/drop_down"
         android:prompt="@string/spinner_prompt"
         android:spinnerMode="dialog"
-        android:layout_height="wrap_content">
+        android:layout_height="fill_parent">
 
     </Spinner>
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="3.5"
             android:id="@+id/distance_input"
-            android:hint="Search by Distance"
-            android:background="@drawable/edt_text"
-            android:textSize="10dp"/>
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Search"
+            android:layout_gravity="center"
+            android:hint="Distance in \n KM"
             android:inputType="number"
-            android:textSize="8dp"
-            android:id="@+id/search_by_distance"
+            android:textAlignment="center"
+            android:layout_marginLeft="2dp"
+           android:background="@drawable/edit_text_distance_input"
+
+            android:textSize="12dp"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="2"
-            android:textColor="@color/black"/>
+            android:src="@drawable/check"
+            android:id="@+id/search_by_distance"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"/>
+
+        <!--<Button-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:text="Go"-->
+            <!--android:layout_marginLeft="3dp"-->
+            <!--android:layout_marginRight="2dp"-->
+            <!--android:textSize="8dp"-->
+            <!--android:id="@+id/search_by_distance"-->
+            <!--android:layout_weight="2.5"-->
+            <!--android:background="@drawable/search_button"-->
+           <!--/>-->
 
     </LinearLayout>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/donor_recycle_view"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
 
-        />
+   </android.support.v7.widget.CardView>
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Swipe Down to Refresh"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:textSize="12dp"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:textColor="@color/blood_red"-->
+        <!--android:fontFamily="serif"/>-->
+    <!--</LinearLayout>-->
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/swipe_refresh">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/donor_recycle_view"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 </LinearLayout>
